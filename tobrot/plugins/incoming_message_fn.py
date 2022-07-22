@@ -59,11 +59,10 @@ async def incoming_message_f(client, message):
     )
     # get link from the incoming message
     i_m_sefg = await message.reply_text("<code>Processing . . . 🔄</code>", quote=True)
-    rep_mess = message.reply_to_message
     is_file = False
     dl_url = ''
     cf_name = ''
-    if rep_mess:
+    if rep_mess := message.reply_to_message:
         file_name = ''
         if rep_mess.media:
             file = [rep_mess.document, rep_mess.video, rep_mess.audio]
@@ -101,7 +100,7 @@ async def incoming_message_f(client, message):
             # start the aria2c daemon
             aria_i_p = await aria_start()
             # LOGGER.info(aria_i_p)
-        
+
         u_men = message.from_user.mention
         await i_m_sefg.edit_text(f"<b>👤 User : {u_men} \n Your Request Has Been Added To The Status \n Use /status To Check Your Progress</b>")
         # try to download the "link"
@@ -261,9 +260,10 @@ async def rename_tg_file(client, message):
         return
     if len(message.command) > 1:
         new_name = (
-            str(Path().resolve()) + "/" +
-            message.text.split(" ", maxsplit=1)[1].strip()
+            f"{str(Path().resolve())}/"
+            + message.text.split(" ", maxsplit=1)[1].strip()
         )
+
         file, mess_age = await download_tg(client, message)
         try:
             if file:

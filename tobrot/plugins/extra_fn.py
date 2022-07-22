@@ -30,8 +30,8 @@ async def mannual_gd_upload(client, message):
     if g_id not in AUTH_CHANNEL:
         await message.reply_text("You're not allowed to use this command!", quote = True)
         return
-    process_msg = await message.reply_text("`Processing...⏳`", parse_mode = "markdown", quote = True) 
-    if not len(message.text) > 6 :
+    process_msg = await message.reply_text("`Processing...⏳`", parse_mode = "markdown", quote = True)
+    if len(message.text) <= 6:
         await process_msg.delete()
         await message.reply_text("**‼️You didn't give path to a file‼️😡**\n`Aborting...`", parse_mode = 'markdown', quote = True)
         return
@@ -94,10 +94,7 @@ async def mannual_gd_upload(client, message):
         # os.remove("filter.txt")
         gauti = f"https://drive.google.com/file/d/{gautam}/view?usp=drivesdk"
         gjay = size(os.path.getsize(path_to_file))
-        button = []
-        button.append(
-            [InlineKeyboardButton(text="☁️ CloudUrl ☁️", url=f"{gauti}")]
-        )
+        button = [[InlineKeyboardButton(text="☁️ CloudUrl ☁️", url=f"{gauti}")]]
         if INDEX_LINK:
             indexurl = f"{INDEX_LINK}/{os.path.basename(path_to_file)}"
             tam_link = requests.utils.requote_uri(indexurl)
@@ -163,10 +160,7 @@ async def mannual_gd_upload(client, message):
         gautii = f"https://drive.google.com/folderview?id={gautam}"
         gjay = size(getFolderSize(path_to_file))
         LOGGER.info(gjay)
-        button = []
-        button.append(
-            [InlineKeyboardButton(text="☁️ CloudUrl ☁️", url=f"{gautii}")]
-        )
+        button = [[InlineKeyboardButton(text="☁️ CloudUrl ☁️", url=f"{gautii}")]]
         if INDEX_LINK:
             indexurl = f"{INDEX_LINK}/{os.path.basename(path_to_file)}/"
             tam_link = requests.utils.requote_uri(indexurl)
@@ -221,9 +215,10 @@ async def dl_to_local_fn(client, message):
         return
     if len(message.command) > 1:
         new_name = (
-            str(Path().resolve()) + "/" +
-            message.text.split(" ", maxsplit=1)[1].strip()
+            f"{str(Path().resolve())}/"
+            + message.text.split(" ", maxsplit=1)[1].strip()
         )
+
     else:
         new_name = None
         await message.reply_text(

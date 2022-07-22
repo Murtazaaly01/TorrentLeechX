@@ -37,7 +37,7 @@ logging.getLogger("PIL").setLevel(logging.WARNING)
 
 LOGGER = logging.getLogger(__name__)
 
-user_specific_config=dict()
+user_specific_config = {}
 
 dotenv.load_dotenv("config.env")
 
@@ -88,7 +88,7 @@ UN_FINISHED_PROGRESS_STR = os.environ.get("UN_FINISHED_PROGRESS_STR", "░")
 # default thumbnail to be used in the videos
 DEF_THUMB_NAIL_VID_S = os.environ.get("DEF_THUMB_NAIL_VID_S", "https://via.placeholder.com/90.jpg")
 EDIT_SLEEP_TIME_OUT = int(os.environ.get("EDIT_SLEEP_TIME_OUT", 15))
-CUSTOM_FILE_NAME = os.environ.get("CUSTOM_FILE_NAME", "") 
+CUSTOM_FILE_NAME = os.environ.get("CUSTOM_FILE_NAME", "")
 UPLOAD_AS_DOC = os.environ.get("UPLOAD_AS_DOC", "False")
 CUSTOM_FILE_CAPTION = os.environ.get('CUSTOM_FILE_CAPTION', '<code>{file_name}</code>')
 
@@ -131,7 +131,7 @@ SPEEDTEST = os.environ.get("SPEEDTEST", "speedtest")
 TSEARCH_COMMAND = os.environ.get("TSEARCH_COMMAND", "tshelp")
 MEDIAINFO_COMMAND = os.environ.get("MEDIAINFO_COMMAND", "mediainfo")
 TG_DL_COMMAND = os.environ.get("TG_DL_COMMAND", "tgdl")
-MANNUAL_GUP_COMMAND = os.environ.get("MANNUAL_GUP_COMMAND", "gupload") 
+MANNUAL_GUP_COMMAND = os.environ.get("MANNUAL_GUP_COMMAND", "gupload")
 ################################################
 
 BOT_START_TIME = time.time()

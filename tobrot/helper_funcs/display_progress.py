@@ -77,9 +77,21 @@ class Progress:
             estimated_total_time = TimeFormatter(milliseconds=estimated_total_time)
 
             progress = "\n<code>[{0}{1}] {2}%</code>\n".format(
-                ''.join([FINISHED_PROGRESS_STR for i in range(math.floor(percentage / 5))]),
-                ''.join([UN_FINISHED_PROGRESS_STR for i in range(20 - math.floor(percentage / 5))]),
-                round(percentage, 2))
+                ''.join(
+                    [
+                        FINISHED_PROGRESS_STR
+                        for _ in range(math.floor(percentage / 5))
+                    ]
+                ),
+                ''.join(
+                    [
+                        UN_FINISHED_PROGRESS_STR
+                        for _ in range(20 - math.floor(percentage / 5))
+                    ]
+                ),
+                round(percentage, 2),
+            )
+
             #cpu = "{psutil.cpu_percent()}%"
             tmp = progress + "\n**⌧ Total 🗃:**` 〚{1}〛`\n**⌧ Done ✅ :**` 〚{0}〛`\n**⌧ Speed 📊 :** ` 〚{2}〛`\n**⌧ ETA 🔃 :**` 〚{3}〛`".format(
                 (humanbytes(current)).replace('/s', ''),     # https://t.me/c/1688177102/15398
@@ -91,12 +103,11 @@ class Progress:
             try:
                 if not self._mess.photo:
                     await self._mess.edit_text(
-                        text="{}\n {}".format(ud_type, tmp), reply_markup=reply_markup
+                        text=f"{ud_type}\n {tmp}", reply_markup=reply_markup
                     )
+
                 else:
-                    await self._mess.edit_caption(
-                        caption="{}\n {}".format(ud_type, tmp)
-                    )
+                    await self._mess.edit_caption(caption=f"{ud_type}\n {tmp}")
             except FloodWait as fd:
                 logger.warning(f"{fd}")
                 time.sleep(fd.x)
@@ -115,19 +126,20 @@ def humanbytes(size):
     while size > power:
         size /= power
         n += 1
-    return str(round(size, 2)) + " " + Dic_powerN[n] + "B/s"
+    return f"{str(round(size, 2))} {Dic_powerN[n]}B/s"
 
 
 def TimeFormatter(milliseconds: int) -> str:
-    seconds, milliseconds = divmod(int(milliseconds), 1000)
+    seconds, milliseconds = divmod(milliseconds, 1000)
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
     tmp = (
-        ((str(days) + "d, ") if days else "")
-        + ((str(hours) + "h, ") if hours else "")
-        + ((str(minutes) + "m, ") if minutes else "")
-        + ((str(seconds) + "s, ") if seconds else "")
-        + ((str(milliseconds) + "ms, ") if milliseconds else "")
+        (f"{str(days)}d, " if days else "")
+        + (f"{str(hours)}h, " if hours else "")
+        + (f"{str(minutes)}m, " if minutes else "")
+        + (f"{str(seconds)}s, " if seconds else "")
+        + (f"{str(milliseconds)}ms, " if milliseconds else "")
     )
+
     return tmp[:-2]

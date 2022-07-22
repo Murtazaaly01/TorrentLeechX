@@ -6,8 +6,6 @@ def parse_gd_link(link):
     if "folders" in link or "file" in link:
         regex = r"https:\/\/drive\.google\.com\/(?:drive(.*?)\/folders\/|file(.*?)?\/d\/)([-\w]+)"
         res = re_search(regex,link)
-        if res is None:
-            return None
-        return res.group(3)
+        return None if res is None else res.group(3)
     parsed = urlparse(link)
     return parse_qs(parsed.query)['id'][0]

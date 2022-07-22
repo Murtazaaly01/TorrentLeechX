@@ -31,10 +31,7 @@ async def new_join_f(client, message):
 
 
 async def help_message_f(client, message):
-    if UPLOAD_AS_DOC:
-        utxt = "Document"
-    else:
-        utxt = "Streamable"
+    utxt = "Document" if UPLOAD_AS_DOC else "Streamable"
     await message.reply_text(
         """HeyHeyHeHeHeyHeyHeHeee""",
         disable_web_page_preview=True,

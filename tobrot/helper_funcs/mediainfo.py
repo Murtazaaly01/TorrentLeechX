@@ -26,7 +26,6 @@ def media_info(file):
             title = filename,
             content = result,
         )["path"]
-        full_link = f"https://telegra.ph/{link_path}"
-        return full_link
+        return f"https://telegra.ph/{link_path}"
     else:
         return None
